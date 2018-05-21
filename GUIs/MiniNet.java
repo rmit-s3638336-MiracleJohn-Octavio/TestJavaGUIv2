@@ -27,7 +27,6 @@ public class MiniNet extends Application {
 	// dummy profiles remember to delete this after
 	public static People people = new People();
 	
-	
 	public static Connections links = new Connections();
 	public static User currentUser;
 	
@@ -127,8 +126,6 @@ public class MiniNet extends Application {
 	
 	private void createDatabase() {
 		
-		myAlert("This is a test");
-		
 		File tmpDir = new File(dbFile);
 		if (!tmpDir.exists()) {
 			try (Connection conn = DriverManager.getConnection(dbConnectionString)) {
@@ -143,8 +140,6 @@ public class MiniNet extends Application {
 	            myAlert(e.getMessage());
 	        }
 
-			// Added to Git
-			
 			createTable();
 		} else {
 			myAlert("The database already exist!");
