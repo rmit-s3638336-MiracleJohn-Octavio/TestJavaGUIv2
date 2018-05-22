@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -45,6 +50,7 @@ public class FileReader {
 		initialiseOtherRelationships();
 	}
 	
+	// Used to load Text Data to Arraylist
 	private void initialiseUser(String line) {
 		StringTokenizer tokens = new StringTokenizer(line, ",");
 
@@ -67,6 +73,48 @@ public class FileReader {
 
 		tempPeople.addUser(newUser);
 	}
+	
+	// Used to load Text Data to SQLLite
+	public void populateData() {
+        // SQL statement for creating a new table
+        String sqlQuery = "SELECT * FROM people";
+        
+		String username;
+		String image;
+		String status;
+		String gender;
+		int age;
+		String state;
+	
+		try (Connection conn = DriverManager.getConnection(glob.sqlConnString);
+                Statement stmt = conn.createStatement()) {
+            // create a new table
+            ResultSet rs =  stmt.executeQuery(sqlQuery);
+            
+            while (rs.next()) {
+	            	username = rs.getString("username");
+	            	image = rs.getString("image");
+	        		status = rs.getString("status");
+	        		gender = rs.getString("gender");
+	        		age = Integer.parseInt(rs.getString("age"));
+	        		state = rs.getString("state");
+            	
+	        		User newUser;
+	        		if (age > 16)
+	        			newUser = new Adult(username, image, status, gender, age, state);
+	        		else if (age > 2)
+	        			newUser = new Child(username, image, status, gender, age, state);
+	        		else
+	        			newUser = new YoungChild(username, image, status, gender, age, state);
+	        		tempPeople.addUser(newUser);
+            }
+            
+        } catch (SQLException e) {
+        		glob.printIt(e.getMessage());
+        		System.exit(1);
+        }
+    }
+	
 	
 	private void initialiseCouples() {
 		Adult userOne;

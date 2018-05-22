@@ -1,13 +1,23 @@
 package System;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
+import Network.Adult;
+import Network.Child;
+import Network.People;
+import Network.User;
+import Network.YoungChild;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -42,25 +52,24 @@ public class MyGlobals {
 			try (Connection conn = DriverManager.getConnection(sqlConnString)) {
 	            if (conn != null) {
 	                DatabaseMetaData meta = conn.getMetaData();
-	                myAlert(
+	                printIt(
 	                		"The driver name is \n" + meta.getDriverName() +
 	                		"Database was successfully created!");
 	            }
 	            
 	        } catch (SQLException e) {
-	            myAlert(e.getMessage());
+	        		printIt(e.getMessage());
+	            System.exit(1);
 	        }
-
-			sqlCreateTable();
 		} 
 	}
 	
 	public void sqlCreateTable() {
         // SQL statement for creating a new table
         String sqlQuery = "CREATE TABLE IF NOT EXISTS people "
-        		+ "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        		+ "name TEXT NOT NULL, "
-        		+ "photo TEXT, "
+        		+ "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+        		+ "username TEXT NOT NULL, "
+        		+ "image TEXT, "
         		+ "status TEXT, "
         		+ "gender TEXT, "
         		+ "age INTEGER, "
@@ -71,7 +80,8 @@ public class MyGlobals {
             // create a new table
             stmt.execute(sqlQuery);
         } catch (SQLException e) {
-        		myAlert(e.getMessage());
+        		printIt(e.getMessage());
+        		System.exit(1);
         }
     }
 	
@@ -81,9 +91,35 @@ public class MyGlobals {
             // create a new table
             stmt.execute(sqlQuery);
         } catch (SQLException e) {
-        		myAlert(e.getMessage());
+        		printIt(e.getMessage());
+        		System.exit(1);
         }
     }
+	
+	public boolean isTableEmpty() {
+        // SQL statement for creating a new table
+		boolean returnValue = true;
+        String sqlQuery = "SELECT count(*) row_counter FROM people";
+        
+        try (Connection conn = DriverManager.getConnection(sqlConnString);
+                Statement stmt = conn.createStatement()) {
+            // create a new table
+            ResultSet rs =  stmt.executeQuery(sqlQuery);
+            
+            rs.next();
+            int rowCounter = Integer.parseInt(rs.getString("row_counter"));
+            if (rowCounter > 0) {
+            		returnValue = false;
+			}
+        } catch (SQLException e) {
+        		printIt(e.getMessage());
+        		System.exit(1);
+        }
+        return returnValue;
+    }
+	
+	
+	
 	
 	/*+------+*
 	 *| File |
@@ -103,9 +139,95 @@ public class MyGlobals {
 		return isFileExist;
 	}
 	
+	public void loadTextDataToSQLData() {
+		File file = new File(txtfilePeople);
+		BufferedReader input = null;
+
+		try {
+			java.io.FileReader fr = new java.io.FileReader(file);
+			input = new BufferedReader(fr);
+
+			String next = input.readLine();
+			while (next != null) {
+				// Initialize Token
+				StringTokenizer tokens = new StringTokenizer(next, ",");
+				String username = "'" + tokens.nextToken().trim() + "'";
+				String image = "'" + tokens.nextToken().replaceAll("\"", "").trim() + "'";
+				String status = "'" + tokens.nextToken().replaceAll("\"", "").trim() + "'";
+				String gender = "'" + tokens.nextToken().trim() + "'";
+				int age = Integer.parseInt(tokens.nextToken().trim());
+				String state = "'" + tokens.nextToken().trim() + "'";
+
+				// Insert the record to SQLLite
+				sqlExecQuery("INSERT INTO people"
+						+ "("
+						+ "username, "
+						+ "image, "
+						+ "status, "
+						+ "gender, "
+						+ "age, "
+						+ "state"
+						+ ") values "
+						+ "(" + username 
+						+ "," + image 
+						+ "," + status 
+						+ "," + gender 
+						+ "," + age 
+						+ "," + state 
+						+ ")");
+				
+				System.out.println(next);
+				next = input.readLine();
+			}
+			input.close();
+
+		} catch (IOException e) {
+			System.err.println("File Reading Error!");
+			System.exit(0);
+		} 
+	}
+	
+	public void insertUser(User newUser) {
+		// Insert the record to SQLLite
+		sqlExecQuery("INSERT INTO people"
+				+ "("
+				+ "username, "
+				+ "image, "
+				+ "status, "
+				+ "gender, "
+				+ "age, "
+				+ "state"
+				+ ") values "
+				+ "('" + newUser.getUsername() + "'" 
+				+ ",'" + newUser.getImage() + "'"
+				+ ",'" + newUser.getStatus() + "'"
+				+ ",'" + newUser.getGender() + "'"
+				+ ",'" + newUser.getAge() + "'"
+				+ ",'" + newUser.getState() + "'"
+				+ ")");
+	}
+	
+	public void updateUser(User newUser) {
+		try {
+			sqlExecQuery("UPDATE people "
+					+ "SET "
+					+ "image='" + newUser.getImage() + "', "
+					+ "status='" + newUser.getStatus() + "', "
+					+ "gender='" + newUser.getGender() + "', "
+					+ "state='" + newUser.getState() + "' "
+					+ "where username='" + newUser.getUsername() + "'");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	/*+-----+*
 	 *| UDF |
 	 *+-----+*/
+	
+	public void printIt(String str) {
+		System.out.println(str);
+	}
 	
 	public void myAlert(String title, String header, String message, AlertType alertType) {
 		Alert alert = new Alert(alertType);

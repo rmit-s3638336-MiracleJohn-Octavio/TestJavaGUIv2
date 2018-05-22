@@ -152,6 +152,7 @@ class AddUser implements EventHandler<ActionEvent>, GUIInterface {
 												genderField.getValue(), 
 												stateField.getValue());
 						MiniNet.people.addUser(newUser);
+						glob.insertUser(newUser);
 						MiniNet.currentUser = MiniNet.people.getProfile(newUser.getUsername());
 						
 						ShowUser showUser = new ShowUser(primaryStage);

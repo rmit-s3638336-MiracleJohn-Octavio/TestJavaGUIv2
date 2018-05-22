@@ -15,7 +15,7 @@ Ali Paprika, "Aliali.png", "Coding", F, 21, VIC
 Chia Seed, "Chia.png", "", F, 21, VIC
 Philip Heney, "Philip.png", "Coding", F, 3, VIC
 Jane Johnson, "Jane.png", "Coding", F, 2, VIC
-John Dekker, "John.png”, ””, F, 22, VIC
-Mike Yammer, "Mike.jpg", "Coding”, F, 16, VIC
-Yammer Boy, ”Yammer.jpg”, ””, F, 16, VIC
-Dave Lincoln, ”Dave.jpeg", "Coding”, F, 33, VIC
+John Dekker, "John.png", "", F, 22, VIC
+Mike Yammer, "Mike.jpg", "Coding", F, 16, VIC
+Yammer Boy, "Yammer.jpg", "", F, 16, VIC
+Dave Lincoln, "Dave.jpeg", "Coding", F, 33, VIC

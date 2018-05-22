@@ -41,14 +41,20 @@ public class MiniNet extends Application {
 		
 		// Create Database
 		glob.sqlCreateDatabase();
+		glob.sqlCreateTable();
 		
-		// Validate Data Text File "people.tx and relations.txt"
-		
+		// Validate Data Text File "people.tx and relations.txt" if Exist
 		if(glob.isFileExist(glob.txtfilePeople) && glob.isFileExist(glob.txtfileRelations)) {
+			
+			
+			// Load Text Data to SQLLite if table is empty
+			if (glob.isTableEmpty()) {
+				glob.loadTextDataToSQLData();
+			}
 			
 			// Use the Text File
 			FileReader f = new FileReader();
-			f.initialiseTempPeople();
+			f.initialiseTempPeople();				// Uses Text File to load Data to Arraylist
 			f.initialiseTempRelations();
 			
 			for (String key : f.getTempPeople().getAllProfiles().keySet()) {
@@ -58,25 +64,45 @@ public class MiniNet extends Application {
 			for (int i=0; i<f.getTempLinks().getRelationships().size(); i++) {
 				links.getRelationships().add(f.getTempLinks().getRelationships().get(i));
 			}
-		} else {
-			Optional<ButtonType> result = glob.myConfirm("Confirm", 
-					"Your Data Text File(s) are missing!", 
-					"Do you want to continue and use the SQLLite instead? \r\n" +
-					"", 
-					AlertType.CONFIRMATION);
-			if (result.get() == ButtonType.OK){
-				
-				// Use the SQLite
-				glob.myAlert("Use Database here");
-				
-				
-		    	} else {
-		    		
-		    		// End the program (No Data file was selected)
-		    		glob.myAlert("You have choosen to abort");
-		    		System.exit(0);
-		    		
-		    	};
+			
+		} else if (glob.isFileExist(glob.sqlDBFile) && glob.isFileExist(glob.txtfileRelations)) {
+			
+			if (glob.isTableEmpty())  {
+				glob.myAlert("Warning", "Missing Data Text File and SQLite Data file", "This will end the Program", AlertType.INFORMATION);
+				System.exit(0);
+			} else {
+				Optional<ButtonType> result = glob.myConfirm("Confirm", 
+						"Your people.txt is missing!", 
+						"Do you want to continue and use the SQLLite instead? \r\n" +
+						"", 
+						AlertType.CONFIRMATION);
+				if (result.get() == ButtonType.OK){
+					
+					// Load Text Data to SQLLite if table is empty
+					if (glob.isTableEmpty()) {
+						glob.loadTextDataToSQLData();
+					}
+					
+					// Use the Text File
+					FileReader f = new FileReader();
+					f.populateData();						// Uses SQLLite to load Data to ArrayList
+					f.initialiseTempRelations();
+					
+					for (String key : f.getTempPeople().getAllProfiles().keySet()) {
+						people.addUser(f.getTempPeople().getAllProfiles().get(key));
+					}
+					
+					for (int i=0; i<f.getTempLinks().getRelationships().size(); i++) {
+						links.getRelationships().add(f.getTempLinks().getRelationships().get(i));
+					}
+					
+			    	} else {
+			    		
+			    		// End the program (No Data file was selected)
+			    		System.exit(0);
+			    		
+			    	};
+			}
 		}
 		
 		// Main Menu UI

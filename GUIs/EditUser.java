@@ -111,6 +111,7 @@ public class EditUser implements EventHandler<ActionEvent>, GUIInterface {
 					MiniNet.currentUser.setImage(imageField.getText());
 					MiniNet.currentUser.setGender(genderField.getValue());
 					MiniNet.currentUser.setState(stateField.getValue());
+					glob.updateUser(MiniNet.currentUser);
 					
 					Alert editAlert = new Alert(AlertType.INFORMATION); 
 					editAlert.setTitle("Changes Made");

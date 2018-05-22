@@ -189,6 +189,7 @@ public class AddChildUser implements GUIInterface {
 					}
 					
 					MiniNet.people.addUser(newChild);
+					glob.insertUser(newChild);
 					MiniNet.currentUser = MiniNet.people.getProfile(newChild.getUsername()) ;
 					
 					// DONE
