@@ -274,9 +274,14 @@ public class ShowUser implements GUIInterface {
 				
 				if ( deleteUserAlert.getResult().getText().equals("OK") ) {
 					try {
+						
+						// Delete from SQLLite
+						glob.deleteUser(MiniNet.currentUser);
+						
 						// procedures to delete user
 						MiniNet.people.deleteUser(MiniNet.currentUser.getUsername());
 						MiniNet.links.deleteAllUserRelationships(MiniNet.currentUser.getUsername());
+						
 						
 						MainMenu mainMenu = new MainMenu(primaryStage);
 						mainMenu.displayMainMenu();

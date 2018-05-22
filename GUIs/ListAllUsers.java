@@ -98,8 +98,12 @@ class ListAllUsers implements EventHandler<ActionEvent>, GUIInterface {
 	
 	public void initUsersListView() {
 		usersList.getItems().clear();
-		for(String user : users)
-			usersList.getItems().add(user);	
+		for(String user : users) {
+			usersList.getItems().add(user);
+			System.out.println(user);
+		}
+			
+		
 	}
 	
 	

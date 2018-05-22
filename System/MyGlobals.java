@@ -118,9 +118,6 @@ public class MyGlobals {
         return returnValue;
     }
 	
-	
-	
-	
 	/*+------+*
 	 *| File |
 	 *+------+*/
@@ -215,6 +212,15 @@ public class MyGlobals {
 					+ "status='" + newUser.getStatus() + "', "
 					+ "gender='" + newUser.getGender() + "', "
 					+ "state='" + newUser.getState() + "' "
+					+ "where username='" + newUser.getUsername() + "'");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteUser(User newUser) {
+		try {
+			sqlExecQuery("DELETE FROM people "
 					+ "where username='" + newUser.getUsername() + "'");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

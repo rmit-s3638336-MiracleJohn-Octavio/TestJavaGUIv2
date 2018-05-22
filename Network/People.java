@@ -127,6 +127,15 @@ public class People {
 		return true;	
 	}
 	
+	// method to delete a user from instantiation
+	public void deleteUserFromInit(String username) {
+		// if no user with username exist cannot delete anything
+		if (!existingUser(username))
+			return;
+
+		profiles.remove(username);			
+	}
+	
 	// method to return a certain user 
 	public User getProfile(String username) {
 		if ( existingUser(username) )

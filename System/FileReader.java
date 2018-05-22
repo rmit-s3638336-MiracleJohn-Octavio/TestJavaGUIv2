@@ -43,14 +43,15 @@ public class FileReader {
 		readPersonTextFile();
 	}
 	
-	public void initialiseTempRelations() {
+	public void initialiseTempRelations() throws NoParentException {
 		readRelationsTextFile();
 		initialiseCouples();
 		initialiseParent();
 		initialiseOtherRelationships();
+		validateChildUsers();
 	}
 	
-	// Used to load Text Data to Arraylist
+	// Used to load Text Data to Array list
 	private void initialiseUser(String line) {
 		StringTokenizer tokens = new StringTokenizer(line, ",");
 
@@ -115,6 +116,32 @@ public class FileReader {
         }
     }
 	
+	private void validateChildUsers()   {
+		try {
+			for (String key : tempPeople.getAllProfiles().keySet()) {
+				System.out.println(tempPeople.getProfile(key).getUsername());
+				if (tempPeople.getProfile(key) instanceof Child) {
+					Child temp = ((Child) tempPeople.getProfile(key));
+
+					if (temp.getParentOne() == null || temp.getParentTwo() == null) {
+						System.out.println("Child User " + key + " not added missing a parent");
+						tempPeople.deleteUserFromInit(temp.getUsername());
+					}
+				}
+
+				if (tempPeople.getProfile(key) instanceof YoungChild) {
+					YoungChild temp = ((YoungChild) tempPeople.getProfile(key));
+
+					if (temp.getParentOne() == null || temp.getParentTwo() == null) {
+						System.out.println("Child User " + key + " not added missing a parent");
+						tempPeople.deleteUserFromInit(temp.getUsername());
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	
 	private void initialiseCouples() {
 		Adult userOne;
@@ -124,9 +151,15 @@ public class FileReader {
 			userOne = (Adult) tempPeople.getProfile(relation.getUsernameOne());
 			userTwo = (Adult) tempPeople.getProfile(relation.getUsernameTwo());
 			
-			userOne.setPartner(userTwo);
-			userTwo.setPartner(userOne);
-			tempLinks.addRelationship(relation.getUsernameOne(), relation.getUsernameTwo(), relation.getType());
+			if (userOne.getPartner() != null && userTwo.getPartner() != null) {
+				userOne.setPartner(userTwo);
+				userTwo.setPartner(userOne);
+				tempLinks.addRelationship(relation.getUsernameOne(), relation.getUsernameTwo(), relation.getType());
+			} else if (userOne.getPartner() != null) {
+				System.out.println(userOne.getUsername() + " already has a partner");
+			} else if (userTwo.getPartner() != null) {
+				System.out.println(userTwo.getUsername() + " already has a partner");
+			}
 		}
 	}
 	
