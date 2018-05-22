@@ -10,12 +10,28 @@ package GUIs;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+
+import java.util.Optional;
+
+import System.MyGlobals;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class MainMenu {
+	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
+	/*+----------+*
+	 *| Controls |
+	 *+----------+*/
 	
 	Text mainHeader = myUI.createHeader("Main Menu");
 	Button searchUserBtn = myUI.createButton("Search User");
@@ -32,7 +48,8 @@ public class MainMenu {
 		this.primaryStage = primaryStage;
 	}
 	
-	public void displayMainMenu() { 		
+	public void displayMainMenu() {
+		mainPane.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		mainPane.add(mainHeader, 0, 0, 2, 1);
 		mainPane.add(searchUserBtn, 0, 1);
 		mainPane.add(listAllUsersBtn, 0, 2);
@@ -42,7 +59,6 @@ public class MainMenu {
 		// go to menu to search for a user
 		searchUserBtn.setOnAction(new SearchUser(primaryStage));
 		
-		// 
 		listAllUsersBtn.setOnAction(new ListAllUsers(primaryStage));
 		
 		// go to menu for add a user
@@ -51,7 +67,10 @@ public class MainMenu {
 		// when exit button is clicked
 		exitBtn.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				System.exit(1);
+				if (isExitApplication()) {
+					// End the Application
+					System.exit(0);
+				}
 		    }
 		});
 				
@@ -60,6 +79,18 @@ public class MainMenu {
 		primaryStage.show();
 	}
 	
+	
+	private boolean isExitApplication() {
+		boolean exitApplication = false;
+		Optional<ButtonType> result = glob.myConfirm("Confirm", 
+				"This will end your session!", "Are you sure you want to exit?", AlertType.CONFIRMATION);
+		if (result.get() == ButtonType.OK){
+			exitApplication = true;
+	    	};
+	    	
+	    	// Return
+	    	return exitApplication;
+	}
 	
 }
 

@@ -2,14 +2,13 @@ package GUIs;
 
 import java.util.ArrayList;
 
-import Exceptions.NotToBeCoupledException;
 import Interfaces.GUIInterface;
 
 import Network.Adult;
 import Network.Child;
 import Network.User;
 import Network.YoungChild;
-
+import System.NotToBeCoupledException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;

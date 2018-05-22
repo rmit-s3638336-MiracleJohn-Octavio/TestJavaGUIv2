@@ -1,4 +1,4 @@
-package FileHandling;
+package System;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,6 +20,7 @@ public class FileReader {
 
 	private People tempPeople = new People();
 	private Connections tempLinks = new Connections();
+	private MyGlobals glob = new MyGlobals();
 	
 	private ArrayList<Relationship> tempCouples = new ArrayList<Relationship>();
 	private ArrayList<Relationship> tempParents = new ArrayList<Relationship>();
@@ -149,9 +150,13 @@ public class FileReader {
 		}
 	}
 
+	/*+----------------+*
+	 *| Read Text File |
+	 *+----------------+*/
+	
 	private void readPersonTextFile() {
 
-		File file = new File("people.txt");
+		File file = new File(glob.txtfilePeople);
 		BufferedReader input = null;
 
 		try {
@@ -177,7 +182,7 @@ public class FileReader {
 	
 	private void readRelationsTextFile() {
 
-		File file = new File("relations.txt");
+		File file = new File(glob.txtfileRelations);
 		BufferedReader input = null;
 
 		try {

@@ -1,13 +1,5 @@
 package GUIs;
 
-/* @author: Adelbert Choi
- * created: May 5, 2018
- * 
- * = AddUser.java (GUI)
- * 
- */
-
-import Exceptions.NoSuchAgeException;
 import Interfaces.GUIInterface;
 
 import java.util.ArrayList;
@@ -15,6 +7,7 @@ import java.util.Arrays;
 
 import Network.Adult;
 import Network.User;
+import System.NoSuchAgeException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -174,6 +167,7 @@ class AddUser implements EventHandler<ActionEvent>, GUIInterface {
 			}
 		});
 			
+		addUserScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(addUserScene);
 		primaryStage.setTitle("Create A User");
 		primaryStage.show();

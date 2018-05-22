@@ -35,6 +35,7 @@ public class myUI {
 		Button newButton = new Button(text);
 		newButton.setStyle(btnStyle);
  		newButton.setPrefSize(btnWidth, btnHeight);
+ 		newButton.getStyleClass().add("iphone-blue");	// add class (for css)
 		return newButton;
 	}
 	

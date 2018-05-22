@@ -1,4 +1,4 @@
-package Exceptions;
+package System;
 
 public class NotToBeCoupledException extends Exception {
 

@@ -10,10 +10,10 @@ package GUIs;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import Exceptions.NoParentException;
 import Interfaces.GUIInterface;
 import Network.Relationship;
 import Network.User;
+import System.NoParentException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;

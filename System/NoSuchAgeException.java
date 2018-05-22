@@ -1,5 +1,5 @@
 
-package Exceptions;
+package System;
 
 public class NoSuchAgeException extends Exception {
 

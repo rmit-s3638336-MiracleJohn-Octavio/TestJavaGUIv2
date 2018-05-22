@@ -7,7 +7,7 @@ package Network;
 
 import java.util.HashMap;
 
-import Exceptions.NoParentException;
+import System.NoParentException;
 
 public class People {
 	

@@ -9,13 +9,12 @@ package GUIs;
 
 import java.util.ArrayList;
 
-import Exceptions.NoParentException;
 import Interfaces.GUIInterface;
 import Network.Adult;
 import Network.Child;
 import Network.Relationship;
 import Network.YoungChild;
-
+import System.NoParentException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;

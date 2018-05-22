@@ -7,8 +7,8 @@ package Network;
 
 import java.util.ArrayList;
 
-import Exceptions.NoParentException;
 import Interfaces.ChildInterface;
+import System.NoParentException;
 
 public class Adult extends User {
 	

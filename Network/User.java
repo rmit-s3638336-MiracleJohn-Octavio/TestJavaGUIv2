@@ -7,7 +7,7 @@ package Network;
 
 import java.util.ArrayList;
 
-import Exceptions.NoParentException;
+import System.NoParentException;
 
 public abstract class User {
 	
