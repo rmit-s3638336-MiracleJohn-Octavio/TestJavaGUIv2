@@ -14,6 +14,7 @@ import Network.Adult;
 import Network.Child;
 import Network.Relationship;
 import Network.YoungChild;
+import System.MyGlobals;
 import System.NoParentException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -32,10 +33,16 @@ import javafx.event.EventHandler;
 
 public class ShowUser implements GUIInterface {
 	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	Stage primaryStage;
 	
 	GridPane showUserPane = myUI.createGridPane();
-	Scene showUserScene = new Scene(showUserPane);
+	Scene showUserScene = new Scene(showUserPane, glob.WINDOW_W, glob.WINDOW_H);
 	
 	Text showUserHeader = myUI.createHeader("Show A User");
 	Label ageLabel = myUI.createLabel("", DETAILS_LABEL_WIDTH);
@@ -291,6 +298,7 @@ public class ShowUser implements GUIInterface {
 		});
 		
 		primaryStage.setTitle("Showing user profile");
+		showUserScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(showUserScene);		
 		primaryStage.show();
 	}

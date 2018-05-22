@@ -8,6 +8,7 @@ import Network.Adult;
 import Network.Child;
 import Network.User;
 import Network.YoungChild;
+import System.MyGlobals;
 import System.NotToBeCoupledException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -27,8 +28,14 @@ import javafx.event.EventHandler;
 
 public class AddChildUser implements GUIInterface {
 	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	GridPane addChildUserPane 	= myUI.createGridPane();
-	Scene addChildUserScene 		= new Scene(addChildUserPane);
+	Scene addChildUserScene 		= new Scene(addChildUserPane, glob.WINDOW_W, glob.WINDOW_H);
 	Stage primaryStage;
 		
 	Text addChildUserHeader 		= myUI.createHeader("");
@@ -215,6 +222,7 @@ public class AddChildUser implements GUIInterface {
 			}
 		});
 		
+		addChildUserScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(addChildUserScene);
 		primaryStage.setTitle("Add a Child/Young Child User");
 		primaryStage.show();

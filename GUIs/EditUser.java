@@ -1,6 +1,7 @@
 package GUIs;
 
 import Interfaces.GUIInterface;
+import System.MyGlobals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +25,14 @@ import javafx.event.EventHandler;
 
 public class EditUser implements EventHandler<ActionEvent>, GUIInterface {
 	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	GridPane editUserPane 	= myUI.createGridPane();
-	Scene editUserScene 		= new Scene(editUserPane);
+	Scene editUserScene 		= new Scene(editUserPane, glob.WINDOW_W, glob.WINDOW_H);
 	Stage primaryStage;
 	
 	Text warnings 			= myUI.warningText("");
@@ -129,6 +136,7 @@ public class EditUser implements EventHandler<ActionEvent>, GUIInterface {
 			}
 		});
 
+		editUserScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(editUserScene);
 		primaryStage.setTitle("Edit User");
 		primaryStage.show();

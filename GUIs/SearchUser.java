@@ -18,15 +18,22 @@ import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
 
 import Interfaces.GUIInterface;
+import System.MyGlobals;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class SearchUser implements EventHandler<ActionEvent>, GUIInterface {
 
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	private Stage primaryStage;
 	
 	GridPane searchUserPane 		= myUI.createGridPane();
-	Scene searchuserScene 		= new Scene(searchUserPane);
+	Scene searchuserScene 		= new Scene(searchUserPane, glob.WINDOW_W, glob.WINDOW_H);
 	
 	Text warnings		 		= myUI.warningText("");
 	Text searchUserHeader 		= myUI.createHeader("Search A User");
@@ -95,7 +102,7 @@ public class SearchUser implements EventHandler<ActionEvent>, GUIInterface {
 				mainMenu.displayMainMenu();
 		    }
 		});
-		
+		searchuserScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(searchuserScene);
 		primaryStage.setTitle("Search a user");
 		primaryStage.show();

@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import Network.Adult;
 import Network.User;
+import System.MyGlobals;
 import System.NoSuchAgeException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,9 +25,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 class AddUser implements EventHandler<ActionEvent>, GUIInterface {
+	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
 		
 	GridPane addUserPane = myUI.createGridPane();
-	Scene addUserScene = new Scene(addUserPane);
+	Scene addUserScene = new Scene(addUserPane, glob.WINDOW_W, glob.WINDOW_H);
 	Stage primaryStage;
 	
 	Text warnings = myUI.warningText("");

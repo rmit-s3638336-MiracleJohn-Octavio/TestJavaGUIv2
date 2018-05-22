@@ -40,7 +40,7 @@ public class MainMenu {
 	Button exitBtn = myUI.createButton("Exit App");
 	
 	GridPane mainPane = myUI.createGridPane();	
-	Scene mainScene 	= new Scene(mainPane);	
+	Scene mainScene 	= new Scene(mainPane, glob.WINDOW_W, glob.WINDOW_H);	
 	Stage primaryStage;
 	
 	
@@ -74,6 +74,7 @@ public class MainMenu {
 		    }
 		});
 				
+		mainScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(mainScene);
 		primaryStage.setTitle("Main Menu");
 		primaryStage.show();

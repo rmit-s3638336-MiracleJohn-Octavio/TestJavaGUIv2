@@ -20,6 +20,10 @@ public class MyGlobals {
 	 *| Variables |
 	 *+-----------+*/
 	
+	// Window Size
+	public final Double WINDOW_W = (double) 650;
+	public final Double WINDOW_H = (double) 650;
+	
 	// Text Files
 	public final String txtfilePeople = "people.txt";
 	public final String txtfileRelations = "relations.txt";

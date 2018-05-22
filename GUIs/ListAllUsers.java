@@ -16,6 +16,7 @@ import Network.Adult;
 import Network.Child;
 import Network.User;
 import Network.YoungChild;
+import System.MyGlobals;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,10 +34,16 @@ import javafx.scene.layout.HBox;
 
 class ListAllUsers implements EventHandler<ActionEvent>, GUIInterface {
 	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	private Stage primaryStage;
 	
 	GridPane selectUserPane		= myUI.createGridPane();
-	Scene selectUserScene 		= new Scene(selectUserPane);
+	Scene selectUserScene 		= new Scene(selectUserPane, glob.WINDOW_W, glob.WINDOW_H);
 	
 	Text warnings		 			= myUI.warningText("");
 	Text selectUserHeader		 	= myUI.createHeader("All Users List"); 
@@ -158,6 +165,7 @@ class ListAllUsers implements EventHandler<ActionEvent>, GUIInterface {
 		});
 	
 		primaryStage.setTitle("All users");
+		selectUserScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(selectUserScene);
 		primaryStage.show();
 	}

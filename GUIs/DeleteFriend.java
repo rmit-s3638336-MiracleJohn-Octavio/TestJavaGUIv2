@@ -13,6 +13,7 @@ import java.util.Collections;
 import Interfaces.GUIInterface;
 import Network.Relationship;
 import Network.User;
+import System.MyGlobals;
 import System.NoParentException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -34,10 +35,16 @@ import javafx.scene.input.MouseEvent;
 
 class DeleteFriend implements EventHandler<ActionEvent>, GUIInterface {
 	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	private Stage primaryStage;
 	
 	GridPane deleteFriendPane = myUI.createGridPane();
-	Scene deleteFriendScene = new Scene(deleteFriendPane);	
+	Scene deleteFriendScene = new Scene(deleteFriendPane, glob.WINDOW_W, glob.WINDOW_H);	
 	
 	Text deleteFriendHeader = myUI.createHeader("Delete a Friend");
 	Label deleteFriendLabel = myUI.createLabel("Choose a friend to delete: ", DETAILS_LABEL_WIDTH);
@@ -154,6 +161,7 @@ class DeleteFriend implements EventHandler<ActionEvent>, GUIInterface {
 
 		
 		primaryStage.setTitle("Delete a user's friend");
+		deleteFriendScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(deleteFriendScene);
 		primaryStage.show();
 	}

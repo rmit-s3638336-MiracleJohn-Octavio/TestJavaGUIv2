@@ -15,6 +15,7 @@ import Network.Adult;
 import Network.Child;
 import Network.User;
 import Network.YoungChild;
+import System.MyGlobals;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -33,10 +34,16 @@ import javafx.scene.input.MouseEvent;
 
 class AddFriend implements EventHandler<ActionEvent>, GUIInterface {
 	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	private Stage primaryStage;
 	
 	GridPane addFriendPane = myUI.createGridPane();
-	Scene addFriendScene = new Scene(addFriendPane);	
+	Scene addFriendScene = new Scene(addFriendPane, glob.WINDOW_W, glob.WINDOW_H);
 	
 	Text addFriendHeader = myUI.createHeader("Add a Friend");
 	Label addFriendLabel = myUI.createLabel("Choose a friend: ");
@@ -235,6 +242,7 @@ class AddFriend implements EventHandler<ActionEvent>, GUIInterface {
 		});
 	
 		primaryStage.setTitle("Add a friend to user");
+		addFriendScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(addFriendScene);
 		primaryStage.show();
 	}

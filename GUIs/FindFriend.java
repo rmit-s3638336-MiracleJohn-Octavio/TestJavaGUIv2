@@ -16,7 +16,7 @@ import DjikstraShortestPath.Graph;
 import DjikstraShortestPath.DijkstraAlgorithm;
 import Interfaces.GUIInterface;
 import Network.Relationship;
-
+import System.MyGlobals;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
@@ -36,10 +36,16 @@ import javafx.scene.input.MouseEvent;
 
 class FindFriend implements EventHandler<ActionEvent>, GUIInterface {
 	
+	/*+-----------------+*
+	 *| Class Variables |
+	 *+-----------------+*/
+	
+	private MyGlobals glob = new MyGlobals();
+	
 	private Stage primaryStage;
 	
 	private GridPane findFriendPane = myUI.createGridPane();
-	private Scene findFriendScene = new Scene(findFriendPane);	
+	private Scene findFriendScene = new Scene(findFriendPane, glob.WINDOW_W, glob.WINDOW_H);
 	
 	private Text findFriendHeader = myUI.createHeader("Find a Friend");
 	private Label findFriendLabel = myUI.createLabel("Choose a friend: ");
@@ -208,6 +214,7 @@ class FindFriend implements EventHandler<ActionEvent>, GUIInterface {
 		});
 	
 		primaryStage.setTitle("Find a Friend");
+		findFriendScene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
 		primaryStage.setScene(findFriendScene);
 		primaryStage.show();
 	}
