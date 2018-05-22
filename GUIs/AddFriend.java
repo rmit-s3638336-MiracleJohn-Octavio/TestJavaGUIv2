@@ -83,7 +83,7 @@ class AddFriend implements EventHandler<ActionEvent>, GUIInterface {
 			if ( MiniNet.people.getProfile(possibleFriend) instanceof Adult )
 				possibleFriends.add(possibleFriend);
 			// add child users that are age 16
-			if ( MiniNet.people.getProfile(possibleFriend).getAge() == 16 )
+			if ( MiniNet.people.getProfile(possibleFriend).getAge() == 16 && MiniNet.currentUser.getAge() == 17)
 				possibleFriends.add(possibleFriend);
 		}
 	}

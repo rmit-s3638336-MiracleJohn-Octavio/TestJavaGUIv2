@@ -73,7 +73,7 @@ class DeleteFriend implements EventHandler<ActionEvent>, GUIInterface {
 	public void initFriendsListView() {
 		for(Relationship friend : friends) {
 			if (friend.getType() != "parent")
-				friendsListView.getItems().add(friend.getUsernameTwo() + " (" + friend.getType() + ")");	
+				friendsListView.getItems().add(friend.getUsernameTwo());	
 		}
 		
 		Collections.sort(friendsListView.getItems());
@@ -125,7 +125,7 @@ class DeleteFriend implements EventHandler<ActionEvent>, GUIInterface {
 			public void handle(MouseEvent arg0) {	
 				
 				try {
-					String selection = friendsListView.getSelectionModel().getSelectedItem().split(" ")[0];
+					String selection = friendsListView.getSelectionModel().getSelectedItem();
 					
 					deleteFriendConfirm(selection);
 					

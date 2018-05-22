@@ -100,10 +100,7 @@ class ListAllUsers implements EventHandler<ActionEvent>, GUIInterface {
 		usersList.getItems().clear();
 		for(String user : users) {
 			usersList.getItems().add(user);
-			System.out.println(user);
-		}
-			
-		
+		}		
 	}
 	
 	

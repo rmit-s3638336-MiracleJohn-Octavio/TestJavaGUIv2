@@ -119,7 +119,6 @@ public class FileReader {
 	private void validateChildUsers()   {
 		try {
 			for (String key : tempPeople.getAllProfiles().keySet()) {
-				System.out.println(tempPeople.getProfile(key).getUsername());
 				if (tempPeople.getProfile(key) instanceof Child) {
 					Child temp = ((Child) tempPeople.getProfile(key));
 
@@ -151,7 +150,7 @@ public class FileReader {
 			userOne = (Adult) tempPeople.getProfile(relation.getUsernameOne());
 			userTwo = (Adult) tempPeople.getProfile(relation.getUsernameTwo());
 			
-			if (userOne.getPartner() != null && userTwo.getPartner() != null) {
+			if (userOne.getPartner() == null && userTwo.getPartner() == null) {
 				userOne.setPartner(userTwo);
 				userTwo.setPartner(userOne);
 				tempLinks.addRelationship(relation.getUsernameOne(), relation.getUsernameTwo(), relation.getType());
